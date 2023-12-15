@@ -29,7 +29,11 @@ Try our online demo app on \[[HuggingFace Demo](https://huggingface.co/spaces/Ju
 git clone https://github.com/FoundationVision/GLEE
 cd GLEE/app/
 pip install -r requirements.txt
+```
 
+Download the pretrain weight for [GLEE-Lite](https://huggingface.co/spaces/Junfeng5/GLEE_demo/resolve/main/GLEE_R50_Scaleup10m.pth?download=true) and [GLEE-Plus](https://huggingface.co/spaces/Junfeng5/GLEE_demo/resolve/main/GLEE_SwinL_Scaleup10m.pth?download=true) 
+
+```
 # support CPU and GPU running
 python app.py
 ```
@@ -40,3 +44,16 @@ python app.py
 
 
 
+
+
+# Citation
+
+```
+@misc{wu2023GLEE,
+  author= {Junfeng Wu, Yi Jiang, Qihao Liu, Zehuan Yuan, Xiang Bai, Song Bai},
+  title = {General Object Foundation Model for Images and Videos at Scale},
+  year={2023},
+  eprint={2312.09158},
+  archivePrefix={arXiv}
+}
+```
