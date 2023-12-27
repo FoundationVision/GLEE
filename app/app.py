@@ -157,7 +157,7 @@ def segment_image(img,prompt_mode, categoryname, custom_category, expressiong, r
             if  categoryname =="COCO-80":
                 batch_category_name = coco_class_name
             elif categoryname =="OBJ365":
-                batch_category_name = obj365_class_name
+                batch_category_name = obj365_class_names
             elif categoryname =="Custom-List":
                 batch_category_name = custom_category.split(',')
             else:
