@@ -1,0 +1,55 @@
+_BASE_: "../Lite/base_clip_teacher_image_R50.yaml"
+FIND_UNUSED_PARAMETERS: True   # set FIND_UNUSED_PARAMETERS to False when use CHECKPOINT=True for EVA02 backbone
+MODEL:
+  WEIGHTS: "model_zoo/GLEE_Pro_pretrain.pth"
+  VISUAL_PROMPT: True
+  BACKBONE:
+    NAME: "D2_EVA02"
+  EVA02:
+    CHECKPOINT: True   
+    PRETRAINED_WEIGHT: 'weights/converted_EVA02_m38m_psz14to16.pth'
+  SEM_SEG_HEAD:
+    PIXEL_DECODER_NAME: "MaskDINOEncoder"
+    DIM_FEEDFORWARD: 2048
+    NUM_FEATURE_LEVELS: 4
+    TOTAL_NUM_FEATURE_LEVELS: 4
+    IN_FEATURES: ["p3", "p4", "p5", "p6"]
+    DEFORMABLE_TRANSFORMER_ENCODER_IN_FEATURES: ["p3", "p4", "p5", "p6"]
+    COMMON_STRIDE: 4
+    TRANSFORMER_ENC_LAYERS: 6
+    FEATURE_ORDER: "low2high"
+DATASETS:
+  TRAIN: ( "openimage_train", "objects365_v2_train",  "lvis_v1_train", "vg_train", "vg_captiontrain", "coco_2017_train",  "refcoco-mixed" ,"grit_5m", "sa1b_2m", "UVO_frame_train", "bdd_det_train", "bdd_inst_train", "image_yt19", "image_yt21", "image_o", "refytb-imagelevel",)
+  TEST: ("coco_2017_val", "refcoco-unc-val", "lvis_v1_minival",)  
+SOLVER:
+  IMS_PER_BATCH: 128
+  BASE_LR: 0.0001
+  STEPS: (400000,  ) 
+  MAX_ITER: 500000
+  WARMUP_ITERS: 1000
+  WARMUP_FACTOR: 0.01
+  WEIGHT_DECAY: 0.1
+  OPTIMIZER: "ADAMW"
+  BACKBONE_MULTIPLIER: 1.0
+  LR_DECAY_RATE: 0.8
+  LR_DECAY_RATE_NUM_LAYERS: 24
+  CHECKPOINT_PERIOD: 20000
+INPUT:
+  IMAGE_SIZE: 1536
+  MIN_SCALE: 0.1
+  MAX_SCALE: 2.0
+  FORMAT: "RGB"
+  DATASET_MAPPER_NAME: "coco_instance_lsj"
+TEST:
+  EVAL_PERIOD: 20000
+DATALOADER:
+  SAMPLER_TRAIN: "MultiDatasetSampler"
+  DATASET_RATIO: [1.5, 1.5, 1.5, 1.0, 1.0, 1.5, 2.5, 5.0, 5.0, 0.2, 0.1, 0.05, 0.3, 0.3, 0.3, 0.2]
+  USE_DIFF_BS_SIZE: True
+  # DATASET_BS: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  DATASET_BS: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+  USE_RFS: [True, True, True, False, False, False,  False, False, False, False, False, False, False, False, False,False]
+  DATASET_ANN: ['box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box','box']
+  FILTER_EMPTY_ANNOTATIONS: True
+  NUM_WORKERS: 4
+OUTPUT_DIR: ./exp/GLEE_Pro_CLIPteacher_scaleup

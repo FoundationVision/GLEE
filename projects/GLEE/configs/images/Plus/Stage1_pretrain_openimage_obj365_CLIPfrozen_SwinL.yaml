@@ -1,0 +1,36 @@
+_BASE_: "../Lite/base_clip_frozen_image_R50.yaml"
+MODEL:
+  WEIGHTS: "weights/converted_maskdino_r50_withoutclip.pth"
+  BACKBONE:
+    NAME: "D2SwinTransformer"
+  SWIN:
+    EMBED_DIM: 192
+    DEPTHS: [2, 2, 18, 2]
+    NUM_HEADS: [6, 12, 24, 48]
+    WINDOW_SIZE: 12
+    APE: False
+    DROP_PATH_RATE: 0.3
+    PATCH_NORM: True
+    PRETRAIN_IMG_SIZE: 384
+    PRETRAINED_WEIGHT: 'weights/swin_large_patch4_window12_384_22k.pth'
+DATASETS:
+  TRAIN: ("objects365_v2_train", "openimage_train", )  
+  TEST: ("objects365_v2_val",)
+SOLVER:
+  IMS_PER_BATCH: 64
+  BASE_LR: 0.0001
+  STEPS: (400000,  ) 
+  MAX_ITER: 500000
+  WARMUP_ITERS: 1000
+  CHECKPOINT_PERIOD: 10000
+TEST:
+  EVAL_PERIOD: 3000
+DATALOADER:
+  SAMPLER_TRAIN: "MultiDatasetSampler"
+  DATASET_RATIO: [1.0, 1.0]
+  USE_DIFF_BS_SIZE: True
+  DATASET_BS: [2, 2]
+  USE_RFS: [True, True]
+  FILTER_EMPTY_ANNOTATIONS: True
+  NUM_WORKERS: 4
+OUTPUT_DIR: ./exp/GLEE_Plus_CLIPfrozen_pretrain

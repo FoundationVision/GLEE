@@ -1,0 +1,24 @@
+_BASE_: "base_clip_frozen_image_R50.yaml"
+MODEL:
+  WEIGHTS: "weights/converted_maskdino_r50_withoutclip.pth"
+DATASETS:
+  TRAIN: ("objects365_v2_train", "openimage_train",)  
+  TEST: ("objects365_v2_val",)
+SOLVER:
+  IMS_PER_BATCH: 64
+  BASE_LR: 0.0001
+  STEPS: (400000,  )
+  MAX_ITER: 500000
+  WARMUP_ITERS: 1000
+  CHECKPOINT_PERIOD: 10000
+TEST:
+  EVAL_PERIOD: 5000
+DATALOADER:
+  SAMPLER_TRAIN: "MultiDatasetSampler"
+  DATASET_RATIO: [1.0, 1.0]
+  USE_DIFF_BS_SIZE: True
+  DATASET_BS: [2, 2]
+  USE_RFS: [True, True]
+  FILTER_EMPTY_ANNOTATIONS: True
+  NUM_WORKERS: 4
+OUTPUT_DIR: ./exp/GLEE_Lite_CLIPfrozen_pretrain

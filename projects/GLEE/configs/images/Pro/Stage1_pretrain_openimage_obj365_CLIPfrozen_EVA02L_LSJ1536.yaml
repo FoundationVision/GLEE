@@ -1,0 +1,52 @@
+_BASE_: "../Lite/base_clip_frozen_image_R50.yaml"
+FIND_UNUSED_PARAMETERS: False   # set FIND_UNUSED_PARAMETERS to False when use CHECKPOINT=True for EVA02 backbone
+MODEL:
+  WEIGHTS: "weights/converted_maskdino_r50_withoutclip.pth"
+  BACKBONE:
+    NAME: "D2_EVA02"
+  EVA02:
+    CHECKPOINT: True   
+    PRETRAINED_WEIGHT: 'weights/converted_EVA02_m38m_psz14to16.pth'
+  SEM_SEG_HEAD:
+    PIXEL_DECODER_NAME: "MaskDINOEncoder"
+    DIM_FEEDFORWARD: 2048
+    NUM_FEATURE_LEVELS: 4
+    TOTAL_NUM_FEATURE_LEVELS: 4
+    IN_FEATURES: ["p3", "p4", "p5", "p6"]
+    DEFORMABLE_TRANSFORMER_ENCODER_IN_FEATURES: ["p3", "p4", "p5", "p6"]
+    COMMON_STRIDE: 4
+    TRANSFORMER_ENC_LAYERS: 6
+    FEATURE_ORDER: "low2high"
+DATASETS:
+  TRAIN: ("objects365_v2_train", "openimage_train", )  
+  TEST: ("objects365_v2_val",)
+SOLVER:
+  IMS_PER_BATCH: 128
+  BASE_LR: 0.0001
+  STEPS: (400000,  ) 
+  MAX_ITER: 500000
+  WARMUP_ITERS: 1000
+  WARMUP_FACTOR: 0.01
+  WEIGHT_DECAY: 0.1
+  OPTIMIZER: "ADAMW"
+  BACKBONE_MULTIPLIER: 1.0
+  LR_DECAY_RATE: 0.8
+  LR_DECAY_RATE_NUM_LAYERS: 24
+  CHECKPOINT_PERIOD: 20000
+INPUT:
+  IMAGE_SIZE: 1536
+  MIN_SCALE: 0.1
+  MAX_SCALE: 2.0
+  FORMAT: "RGB"
+  DATASET_MAPPER_NAME: "coco_instance_lsj"
+TEST:
+  EVAL_PERIOD: 10000
+DATALOADER:
+  SAMPLER_TRAIN: "MultiDatasetSampler"
+  DATASET_RATIO: [1.0, 1.0]
+  USE_DIFF_BS_SIZE: True
+  DATASET_BS: [1, 1]
+  USE_RFS: [True, True]
+  FILTER_EMPTY_ANNOTATIONS: True
+  NUM_WORKERS: 4
+OUTPUT_DIR: ./exp/GLEE_Pro_CLIPfrozen_pretrain

@@ -1,0 +1,26 @@
+_BASE_: "base_clip_teacher_image_R50.yaml"
+MODEL:
+  WEIGHTS: "model_zoo/GLEE_Lite_pretrain.pth"
+  VISUAL_PROMPT: True
+DATASETS:
+  TRAIN: ( "openimage_train", "objects365_v2_train",  "lvis_v1_train", "vg_train", "vg_captiontrain", "coco_2017_train",  "refcoco-mixed" , "sa1b_32_train", "UVO_frame_train", "bdd_det_train", "bdd_inst_train", "image_yt19", "image_yt21", "image_o",)
+  TEST: ("coco_2017_val", "refcoco-unc-val", "lvis_v1_minival",)  
+SOLVER:  
+  IMS_PER_BATCH: 32
+  BASE_LR: 0.0001
+  STEPS: (300000,380000 )
+  MAX_ITER: 400000
+  CHECKPOINT_PERIOD: 10000
+  TEXTENCODER_MULTIPLIER: 0.1
+TEST:
+  EVAL_PERIOD: 10000
+DATALOADER:
+  SAMPLER_TRAIN: "MultiDatasetSampler"
+  DATASET_RATIO: [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 2.5, 2.0, 0.2, 0.1, 0.05, 0.3, 0.3, 0.3]
+  USE_DIFF_BS_SIZE: True
+  DATASET_BS: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+  USE_RFS: [True, True, True, False, False,  False, False, False, False, False, False, False, False, False]
+  DATASET_ANN: ['box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box', 'box']
+  FILTER_EMPTY_ANNOTATIONS: True
+  NUM_WORKERS: 4
+OUTPUT_DIR: ./exp/GLEE_Lite_CLIPteacher_joint
