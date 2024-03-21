@@ -7,7 +7,7 @@ We test the codes in the following environments, other versions may also be comp
 - Pytorch 2.1.0
 - Torchvison 0.16.0
 
-## Install environment for UNINEXT
+## Install environment for GLEE
 
 ```
 pip3 install shapely==1.7.1

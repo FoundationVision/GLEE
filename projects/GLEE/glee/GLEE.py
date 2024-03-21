@@ -380,7 +380,7 @@ class GLEE(nn.Module):
                 self.inference_rvos(batched_inputs, prompt_list, task)
                 return 
             elif task in ['ytbvos']:
-                self.inference_ytbvos_uninext(batched_inputs, prompt_list, task)
+                self.inference_ytbvos(batched_inputs, prompt_list, task)
             elif task in ['omnilabel']:
                 return self.omnilabel_inference(batched_inputs, task)
             else:
