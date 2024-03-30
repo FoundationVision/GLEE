@@ -27,6 +27,11 @@ pip3 install git+https://github.com/wjf5203/cocoapi.git#"egg=pycocotools&subdire
 
 
 
+# Download pretrained Language Model (CLIP text encoder from transformers)
+wget  -P projects/GLEE/clip_vit_base_patch32/  https://huggingface.co/spaces/Junfeng5/GLEE_demo/resolve/main/GLEE/clip_vit_base_patch32/pytorch_model.bin   
+
+
+
 # compile Deformable DETR
 cd projects/GLEE/glee/models/pixel_decoder/ops/
 python3 setup.py build install --user
