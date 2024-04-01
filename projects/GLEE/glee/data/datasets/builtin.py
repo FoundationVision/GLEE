@@ -152,8 +152,8 @@ def register_all_sa1b(root):
         register_sa1b(
             key,
             _get_sa1b_meta(),
-            json_file,
-            image_root,
+            os.path.join(root, json_file),
+            os.path.join(root, image_root),
             has_mask = False
         )
  
