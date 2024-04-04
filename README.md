@@ -16,7 +16,7 @@
 
 ## Highlight:
 
-- GLEE is accepted by **CVPR2024** !
+- GLEE is accepted by **CVPR2024** as **Highlight**!
 - GLEE is a general object foundation model jointly trained on over **ten million images** from various benchmarks with diverse levels of supervision.
 - GLEE is capable of addressing **a wide range of object-centric tasks** simultaneously while maintaining **SOTA** performance.
 -  GLEE demonstrates remarkable versatility and robust **zero-shot transferability** across a spectrum of object-level image and video tasks, and able to **serve as a foundational component** for enhancing other architectures or models.
