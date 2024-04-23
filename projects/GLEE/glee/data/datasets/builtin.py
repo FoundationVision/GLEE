@@ -278,9 +278,8 @@ def register_all_OVIS_image(root):
 
 _PREDEFINED_SPLITS_UVO_image = {
     # UVO-image
-    "UVO_frame_train": ("UVO/uvo_videos_frames", "custom_annotations/UVO/annotations/FrameSet/UVO_frame_train_onecate.json"),
-    "UVO_frame_val": ("UVO/uvo_videos_frames", "custom_annotations/UVO/annotations/FrameSet/UVO_frame_val_onecate.json"),
-    "UVO_frame_val_noncoco": ("UVO/uvo_videos_frames", "custom_annotations/UVO/annotations/FrameSet/UVO_frame_val_noncoco_onecate.json"),
+    "UVO_frame_train": ("UVO/uvo_videos_frames", "custom_annotations/UVO/annotations/FrameSet/UVO_frame_train_onecategory.json"),
+    "UVO_frame_val": ("UVO/uvo_videos_frames", "custom_annotations/UVO/annotations/FrameSet/UVO_frame_val_onecategory.json"),
 }
 
 
