@@ -44,7 +44,7 @@ ${GLEE_ROOT}
 
 ### VisualGenome
 
-Please download [VisualGenome](https://homes.cs.washington.edu/~ranjay/visualgenome/api.html) images from the offical website:  [part 1 (9.2 GB)](https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip), [part 2 (5.47 GB)](https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip), and download our preprocessed annotation file: [train.json](), [train_from_objects.json]() . We expect that the data is organized as below.
+Please download [VisualGenome](https://homes.cs.washington.edu/~ranjay/visualgenome/api.html) images from the offical website:  [part 1 (9.2 GB)](https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip), [part 2 (5.47 GB)](https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip), and download our preprocessed annotation file: [train.json](https://huggingface.co/spaces/Junfeng5/GLEE_demo/resolve/main/annotations/VisualGenome/train.json), [train_from_objects.json](https://huggingface.co/spaces/Junfeng5/GLEE_demo/resolve/main/annotations/VisualGenome/train_from_objects.json) . We expect that the data is organized as below.
 
 ```
 ${GLEE_ROOT}
@@ -150,7 +150,7 @@ ${GLEE_ROOT}
 
 ### UVO
 
-Please download [UVO](https://sites.google.com/view/unidentified-video-object/dataset)  from the offical website, and download our preprocessed annotation file [annotations](): 
+Please download [UVO](https://sites.google.com/view/unidentified-video-object/dataset)  from the offical website, and download our preprocessed annotation file [annotations](https://huggingface.co/spaces/Junfeng5/GLEE_demo/tree/main/annotations/UVO): 
 
  We expect that the data is organized as below. 
 
