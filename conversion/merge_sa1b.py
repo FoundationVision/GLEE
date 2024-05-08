@@ -7,8 +7,8 @@ annbase = json.load(open('sa_000000_joint.json','rb'))
 for i in range(len(annbase['images'])):
     annbase['images'][i]['file_name'] = 'sa_000000/' + annbase['images'][i]['file_name']
 
-for i in range(1,50):
-    ann_i = json.load(open('sa_000{}_joint.json'.format(str(i).zfill(3)),'rb'))
+for file_idx in range(1,50):
+    ann_i = json.load(open('sa_000{}_joint.json'.format(str(file_idx).zfill(3)),'rb'))
     for i in range(len(ann_i['images'])):
         ann_i['images'][i]['file_name'] = 'sa_000{}/'.format(str(i).zfill(3)) + ann_i['images'][i]['file_name']
     annbase['images'] += ann_i['images']  
