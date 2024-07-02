@@ -1,0 +1,46 @@
+_BASE_: "../../images/Lite/base_clip_frozen_image_R50.yaml"
+MODEL:  
+  BACKBONE:
+    NAME: "D2SwinTransformer"
+  SWIN:
+    EMBED_DIM: 192
+    DEPTHS: [2, 2, 18, 2]
+    NUM_HEADS: [6, 12, 24, 48]
+    WINDOW_SIZE: 12
+    APE: False
+    DROP_PATH_RATE: 0.3
+    PATCH_NORM: True
+    PRETRAIN_IMG_SIZE: 384
+  CROSS_TRACK: False
+  PSEUDO_VIDEO: False
+  FREEZE_WHOLE: False
+  TEXT:
+    ARCH: clip_frozen
+DATASETS:
+  TRAIN: ("ytvis_2019_train",  )
+  TEST: ("ytvis_2019_val",)
+SOLVER:
+  IMS_PER_BATCH: 8
+  BASE_LR: 0.0001
+  STEPS: (6000, )
+  MAX_ITER: 8000
+  CHECKPOINT_PERIOD: 2000
+INPUT:
+  SAMPLING_FRAME_NUM: 2
+  SAMPLING_FRAME_RANGE:  5
+  MIN_SIZE_TRAIN_SAMPLING: "choice_by_clip"
+  RANDOM_FLIP: "flip_by_clip"
+  MIN_SIZE_TRAIN: (320, 352, 392, 416, 448, 480, 512, 544, 576, 608, 640)
+  MAX_SIZE_TRAIN: 1333
+  MIN_SIZE_TEST: 480
+  CROP:
+    ENABLED: True
+    TYPE: "absolute_range"
+    SIZE: (384, 600)
+  FORMAT: "RGB"
+TEST:
+  EVAL_PERIOD: 100000
+DATALOADER:
+  FILTER_EMPTY_ANNOTATIONS: False
+  NUM_WORKERS: 8
+OUTPUT_DIR: ./GLEE_Plus_ytvis19

@@ -51,7 +51,125 @@ python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/images/Li
 
 # Video Tasks (Continuously Updated)
 
+### Youtube-VIS, OVIS
 
+1. Run the inference scripts:
+
+   ```
+   # YTVIS19 GLEE-Lite
+   python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/video/Lite/ytvis19_base.yaml  --eval-only --num-gpus 8 MODEL.WEIGHTS  /path/to/GLEE_model_zoo/GLEE_Plus_joint.pth 
+   # YTVIS19 GLEE-Plus
+   python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/video/Plus/ytvis19_Plus.yaml  --eval-only --num-gpus 8 MODEL.WEIGHTS /path/to/GLEE_model_zoo/GLEE_Plus_joint.pth 
+   
+   # ovis GLEE-Lite
+   python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/video/Lite/ovis_base.yaml  --eval-only --num-gpus 8 MODEL.WEIGHTS  /path/to/GLEE_model_zoo/GLEE_Lite_joint.pth 
+   # ovis GLEE-Plus
+   python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/video/Plus/ovis_Plus.yaml  --eval-only --num-gpus 8 MODEL.WEIGHTS  /path/to/GLEE_model_zoo/GLEE_Plus_joint.pth 
+   ```
+
+2. Submit the results.zip to online servers.
+
+
+
+
+
+
+
+### TAO, BURST
+
+#### 1. Data preparation
+
+TAO and BURST share the same video frames.
+
+First, download the validation set zip files (2-TAO_VAL.zip, 2_AVA_HACS_VAL_e49d8f78098a8ffb3769617570a20903.zip) and unzip them from https://motchallenge.net/tao_download.php.
+
+Then, download our preprocessed YTVIS format (COCO-like) annotation files from huggingface:
+
+https://huggingface.co/spaces/Junfeng5/GLEE_demo/tree/main/annotations/TAO
+
+And organize them as below:
+
+```
+${GLEE_ROOT}
+    -- datasets
+        -- TAO 
+            --burst_annotations
+            		-- TAO_val_withlabel_ytvisformat.json
+            		-- val
+            				-- all_classes.json
+            				-- ...
+            --TAO_annotations
+            	 	-- validation_ytvisfmt.json
+            	 	-- validation.json
+            -- frames
+            		-- val
+            			-- ArgoVerse
+            			-- ava
+            			-- ...
+           
+```
+
+#### 2. TAO
+
+1. Run the inference scripts:
+
+   ```
+   python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/video/Lite/TAO_Lite.yaml --eval-only --num-gpus 8 MODEL.WEIGHTS  /path/to/GLEE_model_zoo/GLEE_Lite_joint.pth 
+   
+   python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/video/Plus/TAO_Plus.yaml  --eval-only --num-gpus 8 MODEL.WEIGHTS  /path/to/GLEE_model_zoo/GLEE_Plus_joint.pth 
+   ```
+
+   
+
+2. For TAO, we use teta as our evaluate metric (for more details, please refer to https://github.com/SysCV/tet/blob/main/teta/README.md)
+
+3. Install teta and run evaluation:
+
+   ```
+   git clone https://github.com/SysCV/tet.git
+   cd tet/teta/
+   pip install -r requirements.txt
+   pip install -e .
+   
+   # eval
+   python3 scripts/run_tao.py --METRICS TETA --TRACKERS_TO_EVAL TETer --GT_FOLDER /path/to/${GLEE_ROOT}/datasets/TAO/TAO_annotations/validation.json  --TRACKER_SUB_FOLDER  /path/to/${GLEE_ROOT}/GLEE_TAO_Lite_640p/inference/results.json 
+   
+   ```
+
+#### 3. BURST
+
+1. Run the inference scripts:
+
+   ```
+   python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/video/Lite/BURST_Lite.yaml  --eval-only --num-gpus 8 MODEL.WEIGHTS  /path/to/GLEE_model_zoo/GLEE_Lite_joint.pth 
+   
+   python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/video/Plus/BURST_Plus.yaml  --eval-only --num-gpus 8 MODEL.WEIGHTS  /path/to/GLEE_model_zoo/GLEE_Plus_joint.pth 
+   ```
+
+2. Download eval tools from https://github.com/Ali2500/BURST-benchmark and https://github.com/JonathonLuiten/TrackEval:
+
+   ```
+   mkdir burst_tools
+   cd burst_tools
+   git clone https://github.com/Ali2500/BURST-benchmark.git
+   git clone https://github.com/JonathonLuiten/TrackEval.git
+   wget https://huggingface.co/spaces/Junfeng5/GLEE_demo/resolve/main/annotations/convert_ytvis2tao.py
+   ```
+
+   
+
+3. Run eval codes:
+
+   ```
+   # first convert ytvis format results to TAO/BURST results
+   python3 convert_ytvis2tao.py  --results path/to/GLEE_BURST_Lite_720p/inference/results.json  --refer /path/to/${GLEE_ROOT}/datasets/TAO/burst_annotations/val/all_classes.json 
+   
+   cd BURST-benchmark
+   export TRACKEVAL_DIR=/path/to/burst_tools/TrackEval/
+   python3 burstapi/eval/run.py --pred ../converted_tao_results.json   --gt ../../burst_annotations/val/  --task class_guided
+   ```
+
+   
 
 
 

@@ -244,9 +244,7 @@ ${GLEE_ROOT}
 
 ### ODinW
 
-We follow [GLIP](https://github.com/microsoft/GLIP) to prepare the ODinW 35 dataset, and run ```python3 download.py ``` to download it:
-
-rganized as below. 
+We follow [GLIP](https://github.com/microsoft/GLIP) to prepare the ODinW 35 dataset, and run ```python3 download.py ``` to download it and organized as below. 
 
 ```
 ${GLEE_ROOT}
@@ -260,13 +258,41 @@ ${GLEE_ROOT}
            
 ```
 
+### TAO&BURST
+
+TAO and BURST share the same video frames.
+
+First, download the validation set zip files (2-TAO_VAL.zip, 2_AVA_HACS_VAL_e49d8f78098a8ffb3769617570a20903.zip) and unzip them from https://motchallenge.net/tao_download.php.
+
+Then, download our preprocessed YTVIS format (COCO-like) annotation files from huggingface:
+
+https://huggingface.co/spaces/Junfeng5/GLEE_demo/tree/main/annotations/TAO
+
+And organize them as below:
+
+```
+${GLEE_ROOT}
+    -- datasets
+        -- TAO 
+            --burst_annotations
+            		-- TAO_val_withlabel_ytvisformat.json
+            		-- val
+            				-- all_classes.json
+            				-- ...
+            --TAO_annotations
+            	 	-- validation_ytvisfmt.json
+            	 	-- validation.json
+            -- frames
+            		-- val
+            			-- ArgoVerse
+            			-- ava
+            			-- ...
+           
+```
+
 ### 
 
 ## Updating...
-
-### TAO 
-
-### BURST
 
 ### LV-VIS
 
