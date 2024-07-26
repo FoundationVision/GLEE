@@ -1,4 +1,4 @@
-# Tutorial for Testing (Continuously Updated)
+# Tutorial for Testing (Updating)
 
 GLEE can be directly tested on classic detection and segmentation datasets locally. For some video datasets, the results need to be submitted to Codalab for evaluation. Additionally, certain datasets such as TAO, BURST, and OmniLabel require evaluation using additional tools. We will continue to update the evaluation tutorials for all datasets reported in the paper here.
 
@@ -49,7 +49,7 @@ python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/images/Li
 
  
 
-# Video Tasks (Continuously Updated)
+# Video Tasks 
 
 ### Youtube-VIS, OVIS
 
@@ -173,5 +173,5 @@ ${GLEE_ROOT}
 
 
 
-# Omnilabel and ODinW (Continuously Updated)
+# Omnilabel and ODinW (Updating)
 

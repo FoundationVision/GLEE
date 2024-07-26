@@ -68,6 +68,15 @@ ${GLEE_ROOT}
             						-- Stage1_pretrain_openimage_obj365_CLIPfrozen_EVA02L_LSJ1536.yaml
             						-- Stage2_joint_training_CLIPteacher_EVA02L.yaml
             						-- Stage3_scaleup_CLIPteacher_EVA02L.yaml
+					-- videos
+							-- Lite
+            						-- BURST_Lite.yaml
+            						-- LVVIS.yaml
+            						-- TAO_Lite.yaml
+									-- ytvis19_base.yaml
+									-- ovis_base.yaml
+            				-- Plus
+            						...
 ```
 
 
@@ -82,8 +91,27 @@ Here, `<num_machines>` should be replaced with the number of machines you intend
 
 
 
+# Video Tasks
 
+The finetune and inference codes and scripts for the video tasksd (VIS、TAO、LVVIS、BURST) have been updated.
 
+For finetune GLEE on VIS tasks (especially OVIS) to get better performance, you can use
+
+```bash
+# YouTube-VIS finetune from GLEE stage2 weights
+# Lite
+python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/videos/Lite/ytvis19_base.yaml --num-gpus 8 MODEL.WEIGHTS /path/to/model_zoo/GLEE_Lite_joint.pth 
+# Plus
+python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/videos/Plus/ytvis19_Plus.yaml --num-gpus 8 MODEL.WEIGHTS /path/to/model_zoo/GLEE_Plus_joint.pth 
+
+# OVIS finetune
+# Lite
+python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/videos/Lite/ovis_base.yaml --num-gpus 8 MODEL.WEIGHTS /path/to/model_zoo/GLEE_Lite_joint.pth 
+# Plus
+python3 projects/GLEE/train_net.py --config-file projects/GLEE/configs/videos/Plus/ovis_Plus.yaml --num-gpus 8 MODEL.WEIGHTS /path/to/model_zoo/GLEE_Plus_joint.pth 
+```
+
+for evaluation of these video tasks, please refer to [TEST.md](TEST.md).
 
 
 # Finetune (Continuously Updated)
