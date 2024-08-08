@@ -1,0 +1,42 @@
+_BASE_: "../../images/Lite/base_clip_frozen_image_R50.yaml"
+MODEL:
+  CROSS_TRACK: False
+  PSEUDO_VIDEO: False
+  FREEZE_WHOLE: False
+  BACKBONE:
+    NAME: "D2_EVA02"
+  EVA02:
+    CHECKPOINT: False
+    # PRETRAINED_WEIGHT: 'weights/converted_EVA02_m38m_psz14to16.pth'
+  SEM_SEG_HEAD:
+    # pixel decoder
+    PIXEL_DECODER_NAME: "MaskDINOEncoder"
+    DIM_FEEDFORWARD: 2048
+    NUM_FEATURE_LEVELS: 4
+    TOTAL_NUM_FEATURE_LEVELS: 4
+    IN_FEATURES: ["p3", "p4", "p5", "p6"]
+    DEFORMABLE_TRANSFORMER_ENCODER_IN_FEATURES: ["p3", "p4", "p5", "p6"]
+    COMMON_STRIDE: 4
+    TRANSFORMER_ENC_LAYERS: 6
+    FEATURE_ORDER: "low2high"
+DATASETS:
+  TRAIN: ("ytvis_2019_train",  )
+  TEST: ("ytvis_2019_val",)
+SOLVER:
+  IMS_PER_BATCH: 8
+  BASE_LR: 0.0001
+  STEPS: (6000, )
+  MAX_ITER: 8000
+  CHECKPOINT_PERIOD: 2000
+INPUT:
+  IMAGE_SIZE: 1536
+  MIN_SCALE: 0.1
+  MAX_SCALE: 2.0
+  FORMAT: "RGB"
+  DATASET_MAPPER_NAME: "coco_instance_lsj"
+TEST:
+  EVAL_PERIOD: 100000
+DATALOADER:
+  FILTER_EMPTY_ANNOTATIONS: True
+  NUM_WORKERS: 8
+OUTPUT_DIR: ./GLEE_Pro_ytvis19

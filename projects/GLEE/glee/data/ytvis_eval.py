@@ -222,8 +222,9 @@ def instances_to_coco_json_video(inputs, outputs):
                     segms.append(dummy_seg)
                     _boxes.append(None)
                 else:
-                    segms.append(mask_util.encode(np.array(_mask[:, :, None], order="F", dtype="uint8"))[0])
-                    if _mask.sum()>5 and _box is not None:
+                    rle = mask_util.encode(np.array(_mask[:, :, None], order="F", dtype="uint8"))[0]
+                    segms.append(rle)
+                    if mask_util.area(rle)>5 and _box is not None:
                         _boxes.append(_box.tolist())
                 
             for rle in segms:
