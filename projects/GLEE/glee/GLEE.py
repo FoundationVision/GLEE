@@ -245,6 +245,7 @@ class GLEE(nn.Module):
         self.num_queries = cfg.MODEL.MaskDINO.NUM_OBJECT_QUERIES
         self.instance_on = True
         self.visaul_prompt = cfg.MODEL.VISUAL_PROMPT
+        self.video_window_size = cfg.MODEL.VIDEO_WINDOW_SIZE
 
         self.is_lsj = cfg.INPUT.DATASET_MAPPER_NAME == 'coco_instance_lsj'
 
@@ -754,7 +755,7 @@ class GLEE(nn.Module):
         video_len = len(batched_inputs[0]['file_names'])
 
 
-        clip_length = 5 # self.batch_infer_len
+        clip_length = self.video_window_size
         batch_name_list = self.dataset_name_dicts[task]
 
         #split long video into clips to form a batch input 

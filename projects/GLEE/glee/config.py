@@ -21,6 +21,7 @@ def add_glee_config(cfg):
     cfg.MODEL.CROSS_TRACK = False
     cfg.MODEL.TRACK_VERSION = 'v3'
     cfg.MODEL.EARLYFUSION = True
+    cfg.MODEL.VIDEO_WINDOW_SIZE = 10
     
     cfg.INPUT.SAMPLING_FRAME_NUM = 1
     cfg.INPUT.SAMPLING_FRAME_RANGE = 10
